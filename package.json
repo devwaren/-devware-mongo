@@ -1,18 +1,30 @@
 {
   "name": "@dev-waren/mongodb",
-  "version": "1.0.1",
-  "module": "src/index.ts",
-  "dependencies": {
-    "mongodb": "^7.6.0",
-    "tsdown": "^0.22.14",
-    "typescript": "^6.0.3"
+  "version": "1.0.3",
+  "description": "Declarative MongoDB client",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
   },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "description": "declarative mongodb client",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsdown"
   },
-  "type": "module"
+  "dependencies": {
+    "mongodb": "^7.6.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "tsdown": "^0.22.14",
+    "typescript": "^6.0.3"
+  }
 }
