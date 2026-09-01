@@ -1,0 +1,20 @@
+{
+  "name": "@devwaren/mongodb",
+  "module": "src/index.ts",
+  "version": "1.0.0",
+  "description": "declarative mongodb client",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "mongodb": "^7.6.0",
+    "tsdown": "^0.22.14"
+  },
+  "scripts": {
+    "build": "tsdown"
+  }
+}
