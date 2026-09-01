@@ -1,6 +1,7 @@
 import type {
 	Db,
 	Filter,
+	FilterOperators,
 	InsertOneResult,
 	OptionalUnlessRequiredId,
 	UpdateFilter,
@@ -14,14 +15,9 @@ export type CollectionLimit<T> = {
 	query?: string;
 };
 
-export type CreateServiceFn = <
+export type CollectionService<
 	T extends Record<string, unknown>,
->(
-	db: Db,
-	collection: string,
-	searchField?: keyof T & string,
-	defaultSortBy?: keyof T & string,
-) => {
+> = {
 	all: (
 		options?: CollectionLimit<T>,
 	) => Promise<WithId<T>[]>;
@@ -38,7 +34,7 @@ export type CreateServiceFn = <
 
 	findOne: <K extends keyof T & string>(
 		field: K,
-		value: T[K],
+		value: T[K] | FilterOperators<T[K]>,
 	) => Promise<WithId<T> | null>;
 
 	findOneAndUpdate: <K extends keyof T & string>(
@@ -62,3 +58,11 @@ export type CreateServiceFn = <
 		>
 	>;
 };
+
+export type CreateServiceFn = (
+	db: Db,
+) => <T extends Record<string, unknown>>(
+	collection: string,
+	searchField?: keyof T & string,
+	defaultSortBy?: keyof T & string,
+) => CollectionService<T>;

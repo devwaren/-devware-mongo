@@ -1,6 +1,7 @@
 import type {
 	Db,
 	Filter,
+	FilterOperators,
 	InsertOneResult,
 	OptionalUnlessRequiredId,
 	Sort,
@@ -75,7 +76,7 @@ export const createService = (db: Db) => <
 
 	findOne: async <K extends keyof T & string>(
 		field: K,
-		value: T[K],
+		value: T[K] | FilterOperators<T[K]>,
 	) => {
 		return db.collection<T>(collection).findOne({
 			[field]: value,

@@ -1,13 +1,21 @@
-import type { MongoClient } from "mongodb";
 import { createService } from "../../collection";
 
 type CreateMongoOptions = {
 	mongoURI: string;
 	databaseName: string;
+	message: {
+		success: string;
+		failure: string;
+	}
 };
 
 type Mongo = {
 	service: ReturnType<typeof createService>;
+	disconnect: () => Promise<void>;
 };
 
-export type CreateMongoFn = (options: CreateMongoOptions) =>Promise<Mongo>;
+export type CreateMongoFn = (
+	options: CreateMongoOptions,
+) => Promise<Mongo>;
+
+export type { CreateMongoOptions, Mongo };
