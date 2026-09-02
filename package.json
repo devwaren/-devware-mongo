@@ -1,6 +1,6 @@
 {
   "name": "@dev-waren/mongodb",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Declarative MongoDB client",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -19,7 +19,7 @@
   "scripts": {
     "build": "tsdown"
   },
-  "dependencies": {
+  "peerDependencies": {
     "mongodb": "^7.6.0"
   },
   "devDependencies": {

@@ -5,8 +5,11 @@ export default defineConfig({
 	outDir: "dist",
 	format: ["esm", "cjs"],
 	dts: true,
+    clean: true,
+    deps: {
+        neverBundle: ["mongodb","mongodb/*"],
+    },
 	minify: true,
 	target: "esnext",
-	unbundle: true,
 	platform: "node",
 });
