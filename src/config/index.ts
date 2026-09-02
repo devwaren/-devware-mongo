@@ -6,7 +6,6 @@ import { createService } from "../collection";
 
 dns.setServers([
 	"1.1.1.1",
-	"8.8.8.8",
 ]);
 
 export const createMongo: CreateMongoFn = async ({
@@ -49,6 +48,7 @@ export const createMongo: CreateMongoFn = async ({
 		return {
 			service,
 			disconnect: () => client.close(),
+			db,
 		};
 	} catch (error) {
 		await client.close().catch(() => undefined);

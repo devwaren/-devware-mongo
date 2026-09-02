@@ -6,10 +6,8 @@ export default defineConfig({
 	format: ["esm", "cjs"],
 	dts: true,
     clean: true,
-    deps: {
-        neverBundle: ["mongodb","mongodb/*"],
-    },
 	minify: true,
+    unbundle: true,
 	target: "esnext",
 	platform: "node",
 });
