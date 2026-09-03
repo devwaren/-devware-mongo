@@ -1,9 +1,9 @@
 import type { Db } from "mongodb";
-import { createService } from "../../collection";
+import { collection } from "../../collection";
 
 type CreateMongoOptions = {
-	mongoURI: string;
-	databaseName: string;
+	uri: string;
+	database: string;
 	message: {
 		success: string;
 		failure: string;
@@ -11,7 +11,7 @@ type CreateMongoOptions = {
 };
 
 type Mongo = {
-	service: ReturnType<typeof createService>;
+	collection: ReturnType<typeof collection>;
 	disconnect: () => Promise<void>;
 	db: Db
 };

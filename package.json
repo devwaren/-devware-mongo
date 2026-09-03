@@ -1,6 +1,6 @@
 {
   "name": "@dev-waren/mongodb",
-  "version": "1.0.28",
+  "version": "1.0.29",
   "description": "Declarative MongoDB client",
   "type": "module",
   "main": "./dist/index.cjs",

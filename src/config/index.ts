@@ -2,59 +2,56 @@ import dns from "node:dns";
 import { MongoClient } from "mongodb";
 
 import type { CreateMongoFn } from "./types";
-import { createService } from "../collection";
+import { collection } from "../collection";
 
-dns.setServers([
-	"1.1.1.1",
-]);
+dns.setServers(["1.1.1.1"]);
 
-export const createMongo: CreateMongoFn = async ({
-	mongoURI,
-	databaseName,
-	message,
+export const create: CreateMongoFn = async ({
+    uri,
+    database,
+    message,
 }) => {
-	if (
-		typeof globalThis !== "undefined" &&
-		typeof (globalThis as any).window !== "undefined"
-	) {
-		throw new Error(
-			"createMongo should only be used on the server.",
-		);
-	}
+    if (
+        typeof globalThis !== "undefined" &&
+        typeof (globalThis as any).window !== "undefined"
+    ) {
+        throw new Error(
+            "mongodb creation should only be used on the server.",
+        );
+    }
 
-	if (!mongoURI?.trim()) {
-		throw new Error(
-			message.failure || "MongoDB URI is not configured.",
-		);
-	}
+    if (!uri?.trim()) {
+        throw new Error(
+            message.failure || "MongoDB URI is not configured.",
+        );
+    }
 
-	if (!databaseName?.trim()) {
-		throw new Error(
-			message.failure ||
-				"MongoDB database name is not configured.",
-		);
-	}
+    if (!database?.trim()) {
+        throw new Error(
+            message.failure ||
+                "MongoDB database name is not configured.",
+        );
+    }
 
-	const client = new MongoClient(mongoURI);
+    const client = new MongoClient(uri);
 
-	try {
-		await client.connect();
+    try {
+        await client.connect();
 
-		const db = client.db(databaseName);
-		const service = createService(db);
+        const db = client.db(database);
 
-		console.log(message.success);
+        console.log(message.success);
 
-		return {
-			service,
-			disconnect: () => client.close(),
-			db,
-		};
-	} catch (error) {
-		await client.close().catch(() => undefined);
+        return {
+            collection: collection(db),
+            db,
+            disconnect: () => client.close(),
+        };
+    } catch (error) {
+        await client.close().catch(() => undefined);
 
-		console.error(message.failure);
+        console.error(message.failure);
 
-		throw error;
-	}
+        throw error;
+    }
 };
