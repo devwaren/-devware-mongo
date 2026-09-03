@@ -4,7 +4,7 @@ import { collection } from "../../collection";
 type CreateMongoOptions = {
 	uri: string;
 	database: string;
-	message: {
+	message?: {
 		success: string;
 		failure: string;
 	}

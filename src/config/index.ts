@@ -22,13 +22,13 @@ export const create: CreateMongoFn = async ({
 
     if (!uri?.trim()) {
         throw new Error(
-            message.failure || "MongoDB URI is not configured.",
+            message?.failure || "MongoDB URI is not configured.",
         );
     }
 
     if (!database?.trim()) {
         throw new Error(
-            message.failure ||
+            message?.failure ||
                 "MongoDB database name is not configured.",
         );
     }
@@ -40,7 +40,7 @@ export const create: CreateMongoFn = async ({
 
         const db = client.db(database);
 
-        console.log(message.success);
+        console.log(message?.success);
 
         return {
             collection: collection(db),
@@ -50,7 +50,7 @@ export const create: CreateMongoFn = async ({
     } catch (error) {
         await client.close().catch(() => undefined);
 
-        console.error(message.failure);
+        console.error(message?.failure);
 
         throw error;
     }
