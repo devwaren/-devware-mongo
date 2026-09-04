@@ -1,13 +1,18 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-	entry: ["src/index.ts"],
-	outDir: "dist",
-	format: ["esm", "cjs"],
-	dts: true,
+    entry: ["src/index.ts"],
+    outDir: "dist",
+
+    format: ["esm", "cjs"],
+    dts: true,
     clean: true,
-	minify: true,
-    unbundle: true,
-	target: "esnext",
-	platform: "node",
+    minify: true,
+
+    deps: {
+        neverBundle: ["mongodb","mongodb/*"]
+    },
+
+    target: "esnext",
+    platform: "node",
 });
