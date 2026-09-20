@@ -1,57 +1,68 @@
-import dns from "node:dns";
-import { MongoClient } from "mongodb";
-
 import type { CreateMongoFn } from "./types";
 import { collection } from "../collection";
 
-dns.setServers(["1.1.1.1"]);
-
 export const create: CreateMongoFn = async ({
-    uri,
-    database,
-    message,
+	uri,
+	database,
+	message,
 }) => {
-    if (
-        typeof globalThis !== "undefined" &&
-        typeof (globalThis as any).window !== "undefined"
-    ) {
-        throw new Error(
-            "mongodb creation should only be used on the server.",
-        );
-    }
+	if (
+		typeof globalThis !== "undefined" &&
+		typeof (globalThis as { window?: unknown }).window !==
+			"undefined"
+	) {
+		throw new Error(
+			"MongoDB creation should only be used on the server.",
+		);
+	}
 
-    if (!uri?.trim()) {
-        throw new Error(
-            message?.failure || "MongoDB URI is not configured.",
-        );
-    }
+	if (!uri?.trim()) {
+		throw new Error(
+			message?.failure ??
+				"MongoDB URI is not configured.",
+		);
+	}
 
-    if (!database?.trim()) {
-        throw new Error(
-            message?.failure ||
-                "MongoDB database name is not configured.",
-        );
-    }
+	if (!database?.trim()) {
+		throw new Error(
+			message?.failure ??
+				"MongoDB database name is not configured.",
+		);
+	}
 
-    const client = new MongoClient(uri);
+	const [{ default: dns }, { MongoClient }] =
+		await Promise.all([
+			import("node:dns"),
+			import("mongodb"),
+		]);
 
-    try {
-        await client.connect();
+	dns.setServers(["1.1.1.1"]);
 
-        const db = client.db(database);
+	const client = new MongoClient(uri);
 
-        console.log(message?.success);
+	try {
+		await client.connect();
 
-        return {
-            collection: collection(db),
-            db,
-            disconnect: () => client.close(),
-        };
-    } catch (error) {
-        await client.close().catch(() => undefined);
+		const db = client.db(database);
 
-        console.error(message?.failure);
+		console.log(
+			message?.success ??
+				"MongoDB connected successfully.",
+		);
 
-        throw error;
-    }
+		return {
+			collection: collection(db),
+			db,
+			disconnect: () => client.close(),
+		};
+	} catch (error) {
+		await client.close().catch(() => undefined);
+
+		console.error(
+			message?.failure ??
+				"MongoDB connection failed.",
+		);
+
+		throw error;
+	}
 };

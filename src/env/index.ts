@@ -1,19 +1,29 @@
+import { config } from "dotenv";
 import type { SetEnvFn } from "./types";
 
-const setEnv: SetEnvFn = (name) => {
-	const value = process.env[name];
+const isServer =
+	typeof globalThis !== "undefined" &&
+	!("window" in globalThis);
 
-	if (
-		typeof globalThis !== "undefined" &&
-		typeof (globalThis as any).window !== "undefined"
-	) {
+if (isServer) {
+	config({
+		quiet: true
+	});
+}
+
+const setEnv: SetEnvFn = (name) => {
+	if (!isServer) {
 		throw new Error(
 			"setEnv should only be used on the server.",
 		);
 	}
 
-	if (!value) {
-		throw new Error(`Environment variable ${name} is not defined`);
+	const value = process.env[name];
+
+	if (!value?.trim()) {
+		throw new Error(
+			`Environment variable "${name}" is not defined.`,
+		);
 	}
 
 	return value;

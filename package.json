@@ -1,7 +1,7 @@
 {
   "name": "@dev-waren/mongodb",
-  "version": "1.0.31",
-  "description": "A declarative MongoDB utility package built on the official MongoDB Node.js driver.",
+  "version": "1.0.38",
+  "description": "A declarative MongoDB utility package built on the official MongoDB Node.js driver",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -23,9 +23,14 @@
     "mongodb": "^7.6.0"
   },
   "devDependencies": {
-    "@types/bun": "latest",
     "mongodb": "^7.6.0",
     "tsdown": "^0.23.0",
-    "typescript": "^7.0.2"
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@types/bun": "^1.4.2",
+    "@types/node": "^26.6.2",
+    "dotenv": "^18.0.1",
+    "zod": "^4.6.5"
   }
 }

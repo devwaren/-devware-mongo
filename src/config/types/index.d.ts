@@ -7,17 +7,23 @@ type CreateMongoOptions = {
 	message?: {
 		success: string;
 		failure: string;
-	}
+	};
 };
 
+type CollectionFactory = ReturnType<typeof collection>;
+
 type Mongo = {
-	collection: ReturnType<typeof collection>;
+	collection: CollectionFactory;
 	disconnect: () => Promise<void>;
-	db: Db
+	db: Db;
 };
 
 export type CreateMongoFn = (
 	options: CreateMongoOptions,
 ) => Promise<Mongo>;
 
-export type { CreateMongoOptions, Mongo };
+export type {
+	CreateMongoOptions,
+	Mongo,
+	CollectionFactory,
+};
