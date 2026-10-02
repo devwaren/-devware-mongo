@@ -50,10 +50,25 @@ export const create: CreateMongoFn = async ({
 				"MongoDB connected successfully.",
 		);
 
+		let disconnected = false;
+
+		const disconnect = async () => {
+			if (disconnected) return;
+
+			disconnected = true;
+
+			await client.close();
+
+			console.log(
+				message?.disconnected ??
+					"MongoDB disconnected successfully.",
+			);
+		};
+
 		return {
 			collection: collection(db),
 			db,
-			disconnect: () => client.close(),
+			disconnect,
 		};
 	} catch (error) {
 		await client.close().catch(() => undefined);

@@ -1,6 +1,6 @@
 {
   "name": "@dev-waren/mongodb",
-  "version": "1.0.38",
+  "version": "1.0.40",
   "description": "A declarative MongoDB utility package built on the official MongoDB Node.js driver",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -31,6 +31,7 @@
     "@types/bun": "^1.4.2",
     "@types/node": "^26.6.2",
     "dotenv": "^18.0.1",
+    "xss": "^1.0.15",
     "zod": "^4.6.5"
   }
 }

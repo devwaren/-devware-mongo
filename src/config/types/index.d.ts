@@ -5,8 +5,9 @@ type CreateMongoOptions = {
 	uri: string;
 	database: string;
 	message?: {
-		success: string;
-		failure: string;
+		success?: string;
+		failure?: string;
+		disconnected?: string
 	};
 };
 
